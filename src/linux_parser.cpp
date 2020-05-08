@@ -137,6 +137,7 @@ long LinuxParser::ActiveJiffies(int pid) {
       linestream >> x1 >> x2 >> x3 >> x4 >> x5 >> x6 >> x7 >> x8 >> x9 >> x10 >>
           x11 >> x12 >> x13 >> x14 >> x15 >> x16 >> x17 >> x18 >> x19 >> x20 >>
           x21 >> x22;
+
       utime = x14;
       stime = x15;
       cutime = x16;
@@ -293,14 +294,14 @@ string LinuxParser::Uid(int pid) {
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::User(int pid) {
-  auto uid = ":" + Uid(pid) + ":";
+  auto uid = Uid(pid) + ":";
   string line, user;
   std::ifstream stream(kPasswordPath);
   if (stream.is_open()) {
     while (std::getline(stream, line)) {
       auto index = line.find(uid);
       if (index != string::npos) {
-        return line.substr(0, index - 2);
+        return line.substr(0, index - 3);
       }
     }
   }
