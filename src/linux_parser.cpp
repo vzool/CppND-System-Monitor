@@ -253,14 +253,18 @@ string LinuxParser::Command(int pid) {
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Ram(int pid) {
   /*
-    VmSize:   172336 kB
+    VmData:   172336 kB
+    Using VmData becuase VmSize is the sum of all the virtual memory as you can
+    see on the manpages also. Search for VmSize and you will get the following
+    line. Whereas when you use VmData then it gives the exact physical memory
+    being used as a part of Physical RAM.
   */
   string line, key, unit;
   long size = 0;
   std::ifstream stream(kProcDirectory + std::to_string(pid) + kStatusFilename);
   if (stream.is_open()) {
     while (std::getline(stream, line)) {
-      if (line.find("VmSize") != string::npos) {
+      if (line.find("VmData") != string::npos) {
         std::istringstream linestream(line);
         linestream >> key >> size >> unit;
         break;

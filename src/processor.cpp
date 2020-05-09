@@ -8,7 +8,7 @@
 using std::string;
 
 // TODO: Return the aggregate CPU utilization
-float Processor::Utilization() {
+double Processor::Utilization() {
 
   float totalTime = LinuxParser::Jiffies();
   float activeTime = LinuxParser::ActiveJiffies();
